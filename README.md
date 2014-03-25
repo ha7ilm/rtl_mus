@@ -17,7 +17,7 @@ A sample command for FLAC processing is included in the config file. FLAC is a l
 
 
 ### Permissions on commands
-By changing the source code, one can easily allow and deny particular commands from the clients to be interpreted.
+By changing the source code, one can easily allow and deny remote clients execute particular commands on the <tt>rtl\_tcp</tt> server. Commands that are not allowed are simply not forwarded by <tt>rtl\_mus</tt>.
 
 ### On rtl_tcp crash it fills clients with zeros 
 It can be particularly useful to avoid your GNU Radio flowgraph hang when using an OsmoSDR Source block.
