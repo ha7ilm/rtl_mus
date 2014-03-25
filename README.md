@@ -12,7 +12,7 @@ rtl_mus
 
 ###  DSP processing
 
-<tt>rtl\_mus</tt> can also execute a command to perform DSP processing on the I/Q stream; the processed I/Q stream is sent to its clients. 
+<tt>rtl\_mus</tt> can also execute a command to perform DSP processing on the I/Q stream; then the processed I/Q stream is sent to its clients. 
 A sample command for FLAC processing is included in the config file. FLAC is a loseless codec originally intended for audio, but it seems to work on sampled RF, too... :smile: As of a FLAC processed I/Q stream requires about 20% less bandwidth than the original, it might help to transport I/Q signals over a low-bandwidth internet link, but as of none of the SDR software can decode FLAC right now, another instance of <tt>rtl\_mus</tt> has to be run locally, to decode the FLAC-encoded signal. 
 
 
