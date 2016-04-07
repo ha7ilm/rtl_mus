@@ -417,7 +417,7 @@ class client:
 		for i in range(0,len(clients)):
 			if clients[i][0].ident==self.ident:
 				try:
-					self.socket.close()
+					self.socket[0].close()
 				except:
 					pass
 				try:
@@ -425,6 +425,12 @@ class client:
 					del self.asyncore
 				except:
 					pass
+
+				if self.waiting_data:
+					self.waiting_data.close()
+					self.waiting_data = None
+
+
 				break
 		clients_mutex.release()
 
