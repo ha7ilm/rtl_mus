@@ -1,3 +1,4 @@
+#!/usr/bin/python2
 '''
 This file is part of RTL Multi-User Server, 
 	that makes multi-user access to your DVB-T dongle used as an SDR.
@@ -71,20 +72,21 @@ def add_data_to_clients(new_data):
 	clients_mutex.acquire()
 	for client in clients:
 		#print "client %d size: %d"%(client[0].ident,client[0].waiting_data.qsize())
-		if(client[0].waiting_data.full()):
-			if cfg.cache_full_behaviour == 0:
-				log.error("client cache full, dropping samples: "+str(client[0].ident)+"@"+client[0].socket[1][0])
-				while not client[0].waiting_data.empty(): # clear queue
-					client[0].waiting_data.get(False, None)
-			elif cfg.cache_full_behaviour == 1:
-				#rather closing client:
-				log.error("client cache full, dropping client: "+str(client[0].ident)+"@"+client[0].socket[1][0])
-				client[0].close()
-			elif cfg.cache_full_behaviour == 2:
-				pass #client cache full, just not taking care
-			else: log.error("invalid value for cfg.cache_full_behaviour")
-		else:
-			client[0].waiting_data.put(new_data)
+		if client[0].waiting_data:
+			if(client[0].waiting_data.full()):
+				if cfg.cache_full_behaviour == 0:
+					log.error("client cache full, dropping samples: "+str(client[0].ident)+"@"+client[0].socket[1][0])
+					while not client[0].waiting_data.empty(): # clear queue
+						client[0].waiting_data.get(False, None)
+				elif cfg.cache_full_behaviour == 1:
+					#rather closing client:
+					log.error("client cache full, dropping client: "+str(client[0].ident)+"@"+client[0].socket[1][0])
+					client[0].close()
+				elif cfg.cache_full_behaviour == 2:
+					pass #client cache full, just not taking care
+				else: log.error("invalid value for cfg.cache_full_behaviour")
+			else:
+				client[0].waiting_data.put(new_data)
 	clients_mutex.release()
 
 def dsp_read_thread():
@@ -425,12 +427,9 @@ class client:
 					del self.asyncore
 				except:
 					pass
-
 				if self.waiting_data:
 					self.waiting_data.close()
 					self.waiting_data = None
-
-
 				break
 		clients_mutex.release()
 
