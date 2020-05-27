@@ -3,6 +3,8 @@ rtl_mus
 
 **RTL Multi-User Server** is a small python script to allow multiple clients control the same RTL-SDR compatible DVB-T tuner, while also receiving I/Q samples.
 
+> As of 2020-05-27, this project is obsolete. Check the `nmux` tool in [csdr](https://github.com/ha7ilm/csdr) for a faster alternative (however, that does not support forwarding commands).
+
 ## How does it work?
 - <tt>rtl\_mus</tt> requires an instance of <tt>rtl\_tcp</tt> to connect to. 
 - When it receives a command from any of its clients, <tt>rtl\_mus</tt> resends it to the <tt>rtl\_tcp</tt> server. 
